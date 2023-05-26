@@ -2,7 +2,9 @@
 This project is supposed to help you setup vscode as your IDE for OMNeT++ development with the CoRE simulation models.
 What you will find is a set of scripts and configuration files to setup your workspace and to create build (and in the future hopefully run tasks) for all models.
 
-I got a lot of inspiration from this repository: https://github.com/rjmalves/omnetpp-vscode
+I got inspiration from this repository: https://github.com/rjmalves/omnetpp-vscode
+
+This is a work in progress and suggestions and additions are welcome!
 
 ## Features
 - Model-repository setup
