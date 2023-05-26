@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/timo/omnet/omnetpp-5.5.1/include",
+                "${workspaceFolder}/inet/src",
+                "${workspaceFolder}/CoRE4INET/src", 
+                "${workspaceFolder}/FiCo4OMNeT/src", 
+                "${workspaceFolder}/SignalsAndGateways/src", 
+                "${workspaceFolder}/SOA4CoRE/src", 
+                "${workspaceFolder}/OpenFlow/src", 
+                "${workspaceFolder}/SDN4CoRE/src" 
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
