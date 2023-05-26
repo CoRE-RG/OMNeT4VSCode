@@ -14,6 +14,7 @@ This is a work in progress and suggestions and additions are welcome!
   - [x] Check out the correct branch 
     - [ ] Add script call argument to choose the branches
 - [x] Create Build tasks for alle models
+  - [ ] add json config for modeks and dependencies
 - [ ] Create run tasks for simulations
   - [ ] Add a script to create a run task for a specifc simulation
 
