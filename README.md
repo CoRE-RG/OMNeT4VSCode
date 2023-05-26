@@ -12,7 +12,8 @@ I got a lot of inspiration from this repository: https://github.com/rjmalves/omn
   - [x] Check out the correct branch 
     - [ ] Add script call argument to choose the branches
 - [x] Create Build tasks for alle models
-- [ ] Create example run tasks for all models 
+- [ ] Create run tasks for simulations
+  - [ ] Add a script to create a run task for a specifc simulation
 
 ## Prerequisites
 - On Windows use the WSL: Windows Subsystem for Linux (https://learn.microsoft.com/en-us/windows/wsl/install)
