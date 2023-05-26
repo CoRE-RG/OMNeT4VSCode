@@ -45,10 +45,28 @@ task_presentation_default = {
 task_dependency_none = []
 task_problem_matcher = []
 
+run_command = "${config:omnetppInstallDir}/bin/opp_run"
+run_command_dbg = "${config:omnetppInstallDir}/bin/opp_run_dbg"
+run_group = {
+    "kind": "test",
+    "isDefault": False
+}
+run_presentation_default = task_presentation_default
+# run_args = [
+#     "-n",
+#     ".",
+#     "--image-path=" + imagesPath,
+#     "--ned-path=" + nedPath,
+#     "-l",
+#     libPath
+# ]
 
 # function that creates a task that makes makefiles for a model
-def create_makefile_task_name(model_name):
-    return model_name + " - Make Makefiles"
+def create_makefile_release_task_name(model_name):
+    return model_name + " - Make Makefiles Release"
+
+def create_makefile_debug_task_name(model_name):
+    return model_name + " - Make Makefiles Debug"
 
 def create_build_release_task_name(model_name):
     return model_name + " - Build Release"
@@ -59,7 +77,10 @@ def create_build_debug_task_name(model_name):
 # function that creates task dependencies for a list of model names
 def create_task_dependencies(model_name, build_mode, model_dependencies):
     task_dependencies = []
-    task_dependencies.append(create_makefile_task_name(model_name))
+    if build_mode == "release":
+        task_dependencies.append(create_makefile_release_task_name(model_name))
+    elif build_mode == "debug":
+        task_dependencies.append(create_makefile_debug_task_name(model_name))
     for model_dep in model_dependencies:
         if build_mode == "release":
             task_dependencies.append(create_build_release_task_name(model_dep))
@@ -73,16 +94,22 @@ def create_task_dependencies(model_name, build_mode, model_dependencies):
 # model_dependencies: list of model !NAMES! that this model depends on
 def create_all_model_tasks(model_name, model_dependencies):
     tasks = []
-    tasks.append(create_makefile_task(model_name))
+    tasks.append(create_makefile_task(model_name, "release"))
+    tasks.append(create_makefile_task(model_name, "debug"))
     tasks.append(create_build_task(model_name, "release",model_dependencies))
     tasks.append(create_build_task(model_name, "debug", model_dependencies))
     tasks.append(create_clean_task(model_name))
     return tasks
 
-def create_makefile_task(model_name):
-    task_name = create_makefile_task_name(model_name)
+def create_makefile_task(model_name, build_mode):
+    task_name = ""
+    if build_mode == "release":
+        task_name = create_makefile_release_task_name(model_name)
+    elif build_mode == "debug":
+        task_name = create_makefile_debug_task_name(model_name)
     task_args = [
-        "makefiles"
+        "makefiles",
+        "MODE=" + build_mode
     ]
     task_env = omnetpp_task_env
     task_cwd = "${workspaceFolder}/" + model_name
@@ -97,7 +124,7 @@ def create_clean_task(model_name):
     task_env = omnetpp_task_env
     task_cwd = "${workspaceFolder}/" + model_name
     task_dependencies = []
-    task_dependencies.append(create_makefile_task_name(model_name))
+    task_dependencies.append(create_makefile_release_task_name(model_name))
     task = create_task(task_name, task_type_shell, task_command_make, task_args, task_group_build, task_presentation_default, task_env, task_cwd, task_dependencies)
     return task
 

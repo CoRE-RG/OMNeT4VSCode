@@ -2,11 +2,41 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "inet - Make Makefiles",
+            "label": "inet - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/inet",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "inet - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -57,7 +87,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "inet - Make Makefiles"
+                "inet - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
@@ -89,7 +119,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "inet - Make Makefiles"
+                "inet - Make Makefiles Debug"
             ],
             "problemMatcher": []
         },
@@ -119,16 +149,46 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "inet - Make Makefiles"
+                "inet - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
         {
-            "label": "CoRE4INET - Make Makefiles",
+            "label": "CoRE4INET - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/CoRE4INET",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "CoRE4INET - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -179,7 +239,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "CoRE4INET - Make Makefiles",
+                "CoRE4INET - Make Makefiles Release",
                 "inet - Build Release"
             ],
             "problemMatcher": []
@@ -212,7 +272,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "CoRE4INET - Make Makefiles",
+                "CoRE4INET - Make Makefiles Debug",
                 "inet - Build Debug"
             ],
             "problemMatcher": []
@@ -243,16 +303,46 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "CoRE4INET - Make Makefiles"
+                "CoRE4INET - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
         {
-            "label": "FiCo4OMNeT - Make Makefiles",
+            "label": "FiCo4OMNeT - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/FiCo4OMNeT",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "FiCo4OMNeT - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -303,7 +393,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "FiCo4OMNeT - Make Makefiles"
+                "FiCo4OMNeT - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
@@ -335,7 +425,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "FiCo4OMNeT - Make Makefiles"
+                "FiCo4OMNeT - Make Makefiles Debug"
             ],
             "problemMatcher": []
         },
@@ -365,16 +455,46 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "FiCo4OMNeT - Make Makefiles"
+                "FiCo4OMNeT - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
         {
-            "label": "OpenFlow - Make Makefiles",
+            "label": "OpenFlow - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/OpenFlow",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "OpenFlow - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -425,7 +545,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "OpenFlow - Make Makefiles",
+                "OpenFlow - Make Makefiles Release",
                 "inet - Build Release"
             ],
             "problemMatcher": []
@@ -458,7 +578,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "OpenFlow - Make Makefiles",
+                "OpenFlow - Make Makefiles Debug",
                 "inet - Build Debug"
             ],
             "problemMatcher": []
@@ -489,16 +609,46 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "OpenFlow - Make Makefiles"
+                "OpenFlow - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
         {
-            "label": "SignalsAndGateways - Make Makefiles",
+            "label": "SignalsAndGateways - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/SignalsAndGateways",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "SignalsAndGateways - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -549,7 +699,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SignalsAndGateways - Make Makefiles",
+                "SignalsAndGateways - Make Makefiles Release",
                 "CoRE4INET - Build Release",
                 "FiCo4OMNeT - Build Release"
             ],
@@ -583,7 +733,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SignalsAndGateways - Make Makefiles",
+                "SignalsAndGateways - Make Makefiles Debug",
                 "CoRE4INET - Build Debug",
                 "FiCo4OMNeT - Build Debug"
             ],
@@ -615,16 +765,46 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SignalsAndGateways - Make Makefiles"
+                "SignalsAndGateways - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
         {
-            "label": "SOA4CoRE - Make Makefiles",
+            "label": "SOA4CoRE - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/SOA4CoRE",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "SOA4CoRE - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -675,7 +855,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SOA4CoRE - Make Makefiles",
+                "SOA4CoRE - Make Makefiles Release",
                 "SignalsAndGateways - Build Release"
             ],
             "problemMatcher": []
@@ -708,7 +888,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SOA4CoRE - Make Makefiles",
+                "SOA4CoRE - Make Makefiles Debug",
                 "SignalsAndGateways - Build Debug"
             ],
             "problemMatcher": []
@@ -739,16 +919,46 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SOA4CoRE - Make Makefiles"
+                "SOA4CoRE - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
         {
-            "label": "SDN4CoRE - Make Makefiles",
+            "label": "SDN4CoRE - Make Makefiles Release",
             "type": "shell",
             "command": "/usr/bin/make",
             "args": [
-                "makefiles"
+                "makefiles",
+                "MODE=release"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/SDN4CoRE",
+                "env": {
+                    "OMNETPP_ROOT": "${config:omnetppInstallDir}",
+                    "PATH": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}",
+                    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+                    "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images"
+                }
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "SDN4CoRE - Make Makefiles Debug",
+            "type": "shell",
+            "command": "/usr/bin/make",
+            "args": [
+                "makefiles",
+                "MODE=debug"
             ],
             "group": {
                 "kind": "build",
@@ -799,7 +1009,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SDN4CoRE - Make Makefiles",
+                "SDN4CoRE - Make Makefiles Release",
                 "OpenFlow - Build Release",
                 "SOA4CoRE - Build Release"
             ],
@@ -833,7 +1043,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SDN4CoRE - Make Makefiles",
+                "SDN4CoRE - Make Makefiles Debug",
                 "OpenFlow - Build Debug",
                 "SOA4CoRE - Build Debug"
             ],
@@ -865,7 +1075,7 @@
             },
             "dependsOrder": "sequence",
             "dependsOn": [
-                "SDN4CoRE - Make Makefiles"
+                "SDN4CoRE - Make Makefiles Release"
             ],
             "problemMatcher": []
         },
