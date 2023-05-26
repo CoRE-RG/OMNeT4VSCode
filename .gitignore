@@ -1,0 +1,14 @@
+# Ignore all the other git repositories clone by the setup script
+inet/*
+CoRE4INET/*
+FiCo4OMNeT/*
+OpenFlow/*
+SignalsAndGateways/*
+SDN4CoRE/*
+SOA4CoRE/*
+
+# Ignore possibly existing eclipse workspace files
+.metadata/*
+
+# Ignore backup files created by task creation scripts
+.vscode/tasks.json.old
