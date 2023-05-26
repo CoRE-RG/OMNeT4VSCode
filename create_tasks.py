@@ -14,6 +14,70 @@ from collections import OrderedDict
 vscode_folder = ".vscode"
 tasks_file = "tasks.json"
 
+sep = ':' # path separator
+
+# project roots
+inetRoot = "${workspaceFolder}/inet"
+core4inetRoot = "${workspaceFolder}/CoRE4INET"
+openflowRoot = "${workspaceFolder}/OpenFlow"
+fico4omnetRoot = "${workspaceFolder}/FiCo4OMNeT"
+signalsandgatewaysRoot = "${workspaceFolder}/SignalsAndGateways"
+soa4coreRoot = "${workspaceFolder}/SOA4CoRE"
+sdn4coreRoot = "${workspaceFolder}/SDN4CoRE"
+
+# project lib paths
+libDbgExt = "_dbg"
+inetLib = inetRoot + os.sep + "src" + os.sep + "INET"
+core4inetLib = core4inetRoot + os.sep + "src" + os.sep + "CoRE4INET"
+openflowLib = openflowRoot + os.sep + "src" + os.sep + "OpenFlow"
+fico4omnetLib = fico4omnetRoot + os.sep + "src" + os.sep + "FiCo4OMNeT"
+signalsandgatewaysLib = signalsandgatewaysRoot + os.sep + "src" + os.sep + "SignalsAndGateways"
+soa4coreLib = soa4coreRoot + os.sep + "src" + os.sep + "SOA4CoRE"
+sdn4coreLib = sdn4coreRoot + os.sep + "src" + os.sep + "SDN4CoRE"
+
+# project ned paths
+inetNedPath = inetRoot + "/src" + sep + inetRoot + "/examples" + sep + inetRoot + "/tutorials" + sep + inetRoot + "/showcases"
+core4inetNedPath = core4inetRoot + "/src" + sep + core4inetRoot + "/examples"
+openflowNedPath = openflowRoot + "/src" + sep + openflowRoot + "/scenarios"
+fico4omnetNedPath = fico4omnetRoot + "/src" + sep + fico4omnetRoot + "/examples"
+signalsandgatewaysNedPath = signalsandgatewaysRoot + "/src" + sep + signalsandgatewaysRoot + "/examples"
+soa4coreNedPath = soa4coreRoot + "/src" + sep + soa4coreRoot + "/examples"
+sdn4coreNedPath = sdn4coreRoot + "/src" + sep + sdn4coreRoot + "/examples"
+# combined ned path
+nedPath = inetNedPath + sep + core4inetNedPath + sep + openflowNedPath + sep + fico4omnetNedPath + sep + signalsandgatewaysNedPath + sep + soa4coreNedPath + sep + sdn4coreNedPath
+
+# project images paths
+inetImagesPath = inetRoot + "/images"
+core4inetImagesPath = core4inetRoot + "/images"
+openflowImagesPath = openflowRoot + "/images"
+imagesPath = inetImagesPath + sep + core4inetImagesPath + sep + openflowImagesPath
+
+run_command = "${config:omnetppInstallDir}/bin/opp_run"
+run_command_dbg = "${config:omnetppInstallDir}/bin/opp_run_dbg"
+run_cwd_currentFileDir = "${fileDirname}"
+run_group = {
+    "kind": "test",
+    "isDefault": False
+}
+run_args_default = [
+    "--image-path=" + imagesPath,
+    "--ned-path=" + nedPath,
+    "-l",
+    inetLib,
+    "-l",
+    core4inetLib,
+    "-l",
+    openflowLib,
+    "-l",
+    fico4omnetLib,
+    "-l",
+    signalsandgatewaysLib,
+    "-l",
+    soa4coreLib,
+    "-l",
+    sdn4coreLib
+]
+
 ## Adjust the path to your OMNeT++ installation and workspace
 omnetpp_task_env = {
     "PATH": "${config:omnetppInstallDir}/bin/"
@@ -45,21 +109,16 @@ task_presentation_default = {
 task_dependency_none = []
 task_problem_matcher = []
 
-run_command = "${config:omnetppInstallDir}/bin/opp_run"
-run_command_dbg = "${config:omnetppInstallDir}/bin/opp_run_dbg"
-run_group = {
-    "kind": "test",
-    "isDefault": False
-}
-run_presentation_default = task_presentation_default
-# run_args = [
-#     "-n",
-#     ".",
-#     "--image-path=" + imagesPath,
-#     "--ned-path=" + nedPath,
-#     "-l",
-#     libPath
-# ]
+# function that create a run task and a run debug task for the currentlich open file
+def create_run_tasks():
+    tasks = []
+    run_task_name = "Run current simulation ini file"
+    tasks.append(create_task(run_task_name, task_type_shell, run_command, run_args_default, run_group, 
+                            task_presentation_default, omnetpp_task_env, run_cwd_currentFileDir, task_dependency_none))
+    run_task_name_dbg = "Run debug current simulation ini file"
+    tasks.append(create_task(run_task_name_dbg, task_type_shell, run_command_dbg, run_args_default, run_group, 
+                            task_presentation_default, omnetpp_task_env, run_cwd_currentFileDir, task_dependency_none))
+    return tasks
 
 # function that creates a task that makes makefiles for a model
 def create_makefile_release_task_name(model_name):
@@ -219,10 +278,11 @@ else:
         cleanall = create_task_clean_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"])
         buildallrelease = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "release")
         buildalldebug = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "debug")
+        runTasks = create_run_tasks()
 
         output = OrderedDict([
             ("version", "2.0.0"),
-            ("tasks", inet + core4inet + fico4omnet + openflow + signalsandgateways + soa4core + sdn4core + cleanall + buildallrelease + buildalldebug)
+            ("tasks", inet + core4inet + fico4omnet + openflow + signalsandgateways + soa4core + sdn4core + cleanall + buildallrelease + buildalldebug + runTasks)
         ])
         #write to file
         f.write(json.dumps(output, indent=4, separators=(',', ': ')))

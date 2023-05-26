@@ -1,6 +1,6 @@
 # VSCode Workspace Tools for the CoRE Simulation Models for OMNeT++
 This project is supposed to help you setup vscode as your IDE for OMNeT++ development with the CoRE simulation models.
-What you will find is a set of scripts and configuration files to setup your workspace and to create build (and in the future hopefully run tasks) for all models.
+What you will find is a set of scripts and configuration files to setup your workspace and to create build and run tasks for all models.
 
 I got inspiration from this repository: https://github.com/rjmalves/omnetpp-vscode
 
@@ -15,8 +15,10 @@ This is a work in progress and suggestions and additions are welcome!
     - [ ] Add script call argument to choose the branches
 - [x] Create Build tasks for alle models
   - [ ] add json config for modeks and dependencies
-- [ ] Create run tasks for simulations
-  - [ ] Add a script to create a run task for a specifc simulation
+- [X] Create run tasks for simulations
+  - [X] Create run tasks for the currently open file with qtenv
+  - [ ] Attach debugger -- debug in vscode
+  - [ ] Create run task for parameter studies and batch runs in cmdenv
 
 ## Prerequisites
 - On Windows use the WSL: Windows Subsystem for Linux (https://learn.microsoft.com/en-us/windows/wsl/install)
@@ -67,7 +69,13 @@ There are two build tasks for each model, one for debug and one for release buil
 You can also clean the build directories with the `clean` task.
 
 ## Create run tasks
-Future work...
+In the `create_tasks.py` script, there are also functions to create run tasks for simulations.
+Currently, there is only a task to run the currently openned file with qtenv.
+It should be possible to adjust the script to create more run tasks, e.g., for parameter studies or batch runs in cmdenv.
+This is future work...
 
 ## Run a simulation
-Future work...
+To run a simulation go to the top menu and select `Terminal` -> `Run Task...`.
+Select the `Run current simulation ini file` task for the model you want to run.
+There is also a `Run debug current simulation ini file` to run the dbg library, but the vscode debugger is not yet attached to it.
+This is future work...
