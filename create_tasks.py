@@ -13,6 +13,7 @@ from collections import OrderedDict
 
 vscode_folder = ".vscode"
 tasks_file = "tasks.json"
+launch_file = "launch.json"
 
 sep = ':' # path separator
 
@@ -62,6 +63,7 @@ run_group = {
 run_args_default = [
     "--image-path=" + imagesPath,
     "--ned-path=" + nedPath,
+    "--debug-on-errors=true",
     "-l",
     inetLib,
     "-l",
@@ -75,7 +77,14 @@ run_args_default = [
     "-l",
     soa4coreLib,
     "-l",
-    sdn4coreLib
+    sdn4coreLib,
+    "${file}"
+]
+run_environment = [
+    {"name": "OMNETPP_ROOT", "value": "${config:omnetppInstallDir}"},
+    {"name": "PATH", "value": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}"},
+    {"name": "OMNETPP_CONFIGFILE", "value": "${config:omnetppInstallDir}/Makefile.inc"},
+    {"name": "OMNETPP_IMAGE_PATH", "value": "${config:omnetppInstallDir}/images"}
 ]
 
 ## Adjust the path to your OMNeT++ installation and workspace
@@ -109,16 +118,40 @@ task_presentation_default = {
 task_dependency_none = []
 task_problem_matcher = []
 
-# function that create a run task and a run debug task for the currentlich open file
-def create_run_tasks():
-    tasks = []
-    run_task_name = "Run current simulation ini file"
-    tasks.append(create_task(run_task_name, task_type_shell, run_command, run_args_default, run_group, 
-                            task_presentation_default, omnetpp_task_env, run_cwd_currentFileDir, task_dependency_none))
-    run_task_name_dbg = "Run debug current simulation ini file"
-    tasks.append(create_task(run_task_name_dbg, task_type_shell, run_command_dbg, run_args_default, run_group, 
-                            task_presentation_default, omnetpp_task_env, run_cwd_currentFileDir, task_dependency_none))
-    return tasks
+# function that create a launch and launch debug config for the currently open file
+def create_run_config(launch_mode, launch_with_build):
+    launch_pre_task_name = ""
+    if (launch_mode == "debug"):
+        name = "Debug an OMNeT++ simulation"
+        program = run_command_dbg
+    else:
+        name = "Run an OMNeT++ simulation"
+        program = run_command
+    
+    if(launch_with_build):
+        name = "Build all and " + name
+        launch_pre_task_name = create_build_all_task_name(launch_mode)
+    return create_launch_config(name, program, launch_pre_task_name)
+
+def create_launch_config(launch_name, launch_program, launch_pretask_name):
+    config = OrderedDict([
+        ("name", launch_name),
+        ("type", "cppdbg"),
+        ("request", "launch"),
+        ("program", launch_program),
+        ("args", run_args_default),
+        ("stopAtEntry", False),
+        ("cwd", run_cwd_currentFileDir),
+        ("environment", run_environment),
+        ("externalConsole", False),
+        ("MIMode", "gdb"),
+        ("miDebuggerPath", "/usr/bin/gdb"),
+        ("preLaunchTask", launch_pretask_name),
+    ])
+    return config
+
+
+
 
 # function that creates a task that makes makefiles for a model
 def create_makefile_release_task_name(model_name):
@@ -147,6 +180,8 @@ def create_task_dependencies(model_name, build_mode, model_dependencies):
             task_dependencies.append(create_build_debug_task_name(model_dep))
     return task_dependencies
 
+def create_build_all_task_name(build_mode):
+    return "Build All " + build_mode.capitalize()
 
 # function that creates all tasks for a model
 # model_name: name of the model
@@ -221,7 +256,7 @@ def create_task_build_all(model_names, build_mode):
         elif build_mode == "debug":
             task_dependencies.append(model_name + " - Build Debug")
     task = OrderedDict([
-        ("label", "Build All " + build_mode.capitalize()),
+        ("label", create_build_all_task_name(build_mode)),
         ("presentation", task_presentation_default),
         ("dependsOrder", "sequence"),
         ("dependsOn", task_dependencies),
@@ -254,10 +289,7 @@ def create_task(task_name, task_type, task_command, task_args, task_group, task_
 #     os.makedirs(vscode_folder)
 
 # check if tasks.json file exists
-if not os.path.exists(os.path.join(vscode_folder, tasks_file)):
-    with open(os.path.join(vscode_folder, tasks_file), "w") as f:
-        f.write("{}")
-else:
+if os.path.exists(os.path.join(vscode_folder, tasks_file)):
     # move old tasks.json file to tasks.json.old
     old_file_path = os.path.join(vscode_folder, tasks_file + ".old")
     if os.path.exists(old_file_path):
@@ -266,23 +298,59 @@ else:
             index += 1
         old_file_path += str(index)
     shutil.move(os.path.join(vscode_folder, tasks_file), old_file_path)
-    # create new tasks.json file
-    with open(os.path.join(vscode_folder, tasks_file), "w") as f:
-        inet = create_all_model_tasks("inet", [])
-        core4inet = create_all_model_tasks("CoRE4INET", ["inet"])
-        fico4omnet = create_all_model_tasks("FiCo4OMNeT", [])
-        openflow = create_all_model_tasks("OpenFlow", ["inet"])
-        signalsandgateways = create_all_model_tasks("SignalsAndGateways", ["CoRE4INET","FiCo4OMNeT"])
-        soa4core = create_all_model_tasks("SOA4CoRE", ["SignalsAndGateways"])
-        sdn4core = create_all_model_tasks("SDN4CoRE", ["OpenFlow","SOA4CoRE"])
-        cleanall = create_task_clean_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"])
-        buildallrelease = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "release")
-        buildalldebug = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "debug")
-        runTasks = create_run_tasks()
+    print ("Moved old tasks.json file to " + old_file_path)
+    
+# create new tasks.json file
+with open(os.path.join(vscode_folder, tasks_file), "w") as f:
+    print ("Create new tasks.json file")
+    inet = create_all_model_tasks("inet", [])
+    core4inet = create_all_model_tasks("CoRE4INET", ["inet"])
+    fico4omnet = create_all_model_tasks("FiCo4OMNeT", [])
+    openflow = create_all_model_tasks("OpenFlow", ["inet"])
+    signalsandgateways = create_all_model_tasks("SignalsAndGateways", ["CoRE4INET","FiCo4OMNeT"])
+    soa4core = create_all_model_tasks("SOA4CoRE", ["SignalsAndGateways"])
+    sdn4core = create_all_model_tasks("SDN4CoRE", ["OpenFlow","SOA4CoRE"])
+    cleanall = create_task_clean_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"])
+    buildallrelease = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "release")
+    buildalldebug = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "debug")
 
-        output = OrderedDict([
-            ("version", "2.0.0"),
-            ("tasks", inet + core4inet + fico4omnet + openflow + signalsandgateways + soa4core + sdn4core + cleanall + buildallrelease + buildalldebug + runTasks)
-        ])
-        #write to file
-        f.write(json.dumps(output, indent=4, separators=(',', ': ')))
+    output = OrderedDict([
+        ("version", "2.0.0"),
+        ("tasks", inet + core4inet + fico4omnet + openflow + signalsandgateways + soa4core + sdn4core + cleanall + buildallrelease + buildalldebug)
+    ])
+    print ("Added tasks for: inet, CoRE4INET, FiCo4OMNeT, OpenFlow, SignalsAndGateways, SOA4CoRE, SDN4CoRE, and clean all and build all tasks for release and debug")
+    #write to file
+    f.write(json.dumps(output, indent=4, separators=(',', ': ')))
+    print ("Wrote tasks.json file")
+
+# do the same for launch.json
+if os.path.exists(os.path.join(vscode_folder, launch_file)):
+    # move old launch.json file to launch.json.old
+    old_file_path = os.path.join(vscode_folder, launch_file + ".old")
+    if os.path.exists(old_file_path):
+        index = 1
+        while os.path.exists(old_file_path + str(index)):
+            index += 1
+        old_file_path += str(index)
+    shutil.move(os.path.join(vscode_folder, launch_file), old_file_path)
+    print ("Moved old launch.json file to " + old_file_path)
+
+# create new launch.json file
+with open(os.path.join(vscode_folder, launch_file), "w") as f:
+    print ("Create new launch.json file")
+    configs = [
+        create_run_config("release", False),
+        create_run_config("debug", False),
+        create_run_config("release", True),
+        create_run_config("debug", True)
+    ]
+    output = OrderedDict([
+        ("version", "0.2.0"),
+        ("configurations", configs)
+    ])
+    print ("Added run configurations for: release, debug, release with and without build tasks")
+    #write to file
+    f.write(json.dumps(output, indent=4, separators=(',', ': ')))
+    print ("Wrote launch.json file")
+
+print("Done!")

@@ -1,0 +1,205 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run an OMNeT++ simulation",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${config:omnetppInstallDir}/bin/opp_run",
+            "args": [
+                "--image-path=${workspaceFolder}/inet/images:${workspaceFolder}/CoRE4INET/images:${workspaceFolder}/OpenFlow/images",
+                "--ned-path=${workspaceFolder}/inet/src:${workspaceFolder}/inet/examples:${workspaceFolder}/inet/tutorials:${workspaceFolder}/inet/showcases:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/examples:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/scenarios:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/examples:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/examples:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/examples:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/examples",
+                "--debug-on-errors=true",
+                "-l",
+                "${workspaceFolder}/inet/src/INET",
+                "-l",
+                "${workspaceFolder}/CoRE4INET/src/CoRE4INET",
+                "-l",
+                "${workspaceFolder}/OpenFlow/src/OpenFlow",
+                "-l",
+                "${workspaceFolder}/FiCo4OMNeT/src/FiCo4OMNeT",
+                "-l",
+                "${workspaceFolder}/SignalsAndGateways/src/SignalsAndGateways",
+                "-l",
+                "${workspaceFolder}/SOA4CoRE/src/SOA4CoRE",
+                "-l",
+                "${workspaceFolder}/SDN4CoRE/src/SDN4CoRE",
+                "${file}"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [
+                {
+                    "name": "OMNETPP_ROOT",
+                    "value": "${config:omnetppInstallDir}"
+                },
+                {
+                    "name": "PATH",
+                    "value": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}"
+                },
+                {
+                    "name": "OMNETPP_CONFIGFILE",
+                    "value": "${config:omnetppInstallDir}/Makefile.inc"
+                },
+                {
+                    "name": "OMNETPP_IMAGE_PATH",
+                    "value": "${config:omnetppInstallDir}/images"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": ""
+        },
+        {
+            "name": "Debug an OMNeT++ simulation",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${config:omnetppInstallDir}/bin/opp_run_dbg",
+            "args": [
+                "--image-path=${workspaceFolder}/inet/images:${workspaceFolder}/CoRE4INET/images:${workspaceFolder}/OpenFlow/images",
+                "--ned-path=${workspaceFolder}/inet/src:${workspaceFolder}/inet/examples:${workspaceFolder}/inet/tutorials:${workspaceFolder}/inet/showcases:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/examples:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/scenarios:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/examples:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/examples:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/examples:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/examples",
+                "--debug-on-errors=true",
+                "-l",
+                "${workspaceFolder}/inet/src/INET",
+                "-l",
+                "${workspaceFolder}/CoRE4INET/src/CoRE4INET",
+                "-l",
+                "${workspaceFolder}/OpenFlow/src/OpenFlow",
+                "-l",
+                "${workspaceFolder}/FiCo4OMNeT/src/FiCo4OMNeT",
+                "-l",
+                "${workspaceFolder}/SignalsAndGateways/src/SignalsAndGateways",
+                "-l",
+                "${workspaceFolder}/SOA4CoRE/src/SOA4CoRE",
+                "-l",
+                "${workspaceFolder}/SDN4CoRE/src/SDN4CoRE",
+                "${file}"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [
+                {
+                    "name": "OMNETPP_ROOT",
+                    "value": "${config:omnetppInstallDir}"
+                },
+                {
+                    "name": "PATH",
+                    "value": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}"
+                },
+                {
+                    "name": "OMNETPP_CONFIGFILE",
+                    "value": "${config:omnetppInstallDir}/Makefile.inc"
+                },
+                {
+                    "name": "OMNETPP_IMAGE_PATH",
+                    "value": "${config:omnetppInstallDir}/images"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": ""
+        },
+        {
+            "name": "Build all and Run an OMNeT++ simulation",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${config:omnetppInstallDir}/bin/opp_run",
+            "args": [
+                "--image-path=${workspaceFolder}/inet/images:${workspaceFolder}/CoRE4INET/images:${workspaceFolder}/OpenFlow/images",
+                "--ned-path=${workspaceFolder}/inet/src:${workspaceFolder}/inet/examples:${workspaceFolder}/inet/tutorials:${workspaceFolder}/inet/showcases:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/examples:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/scenarios:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/examples:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/examples:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/examples:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/examples",
+                "--debug-on-errors=true",
+                "-l",
+                "${workspaceFolder}/inet/src/INET",
+                "-l",
+                "${workspaceFolder}/CoRE4INET/src/CoRE4INET",
+                "-l",
+                "${workspaceFolder}/OpenFlow/src/OpenFlow",
+                "-l",
+                "${workspaceFolder}/FiCo4OMNeT/src/FiCo4OMNeT",
+                "-l",
+                "${workspaceFolder}/SignalsAndGateways/src/SignalsAndGateways",
+                "-l",
+                "${workspaceFolder}/SOA4CoRE/src/SOA4CoRE",
+                "-l",
+                "${workspaceFolder}/SDN4CoRE/src/SDN4CoRE",
+                "${file}"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [
+                {
+                    "name": "OMNETPP_ROOT",
+                    "value": "${config:omnetppInstallDir}"
+                },
+                {
+                    "name": "PATH",
+                    "value": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}"
+                },
+                {
+                    "name": "OMNETPP_CONFIGFILE",
+                    "value": "${config:omnetppInstallDir}/Makefile.inc"
+                },
+                {
+                    "name": "OMNETPP_IMAGE_PATH",
+                    "value": "${config:omnetppInstallDir}/images"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": "Build All Release"
+        },
+        {
+            "name": "Build all and Debug an OMNeT++ simulation",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${config:omnetppInstallDir}/bin/opp_run_dbg",
+            "args": [
+                "--image-path=${workspaceFolder}/inet/images:${workspaceFolder}/CoRE4INET/images:${workspaceFolder}/OpenFlow/images",
+                "--ned-path=${workspaceFolder}/inet/src:${workspaceFolder}/inet/examples:${workspaceFolder}/inet/tutorials:${workspaceFolder}/inet/showcases:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/examples:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/scenarios:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/examples:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/examples:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/examples:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/examples",
+                "--debug-on-errors=true",
+                "-l",
+                "${workspaceFolder}/inet/src/INET",
+                "-l",
+                "${workspaceFolder}/CoRE4INET/src/CoRE4INET",
+                "-l",
+                "${workspaceFolder}/OpenFlow/src/OpenFlow",
+                "-l",
+                "${workspaceFolder}/FiCo4OMNeT/src/FiCo4OMNeT",
+                "-l",
+                "${workspaceFolder}/SignalsAndGateways/src/SignalsAndGateways",
+                "-l",
+                "${workspaceFolder}/SOA4CoRE/src/SOA4CoRE",
+                "-l",
+                "${workspaceFolder}/SDN4CoRE/src/SDN4CoRE",
+                "${file}"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [
+                {
+                    "name": "OMNETPP_ROOT",
+                    "value": "${config:omnetppInstallDir}"
+                },
+                {
+                    "name": "PATH",
+                    "value": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}"
+                },
+                {
+                    "name": "OMNETPP_CONFIGFILE",
+                    "value": "${config:omnetppInstallDir}/Makefile.inc"
+                },
+                {
+                    "name": "OMNETPP_IMAGE_PATH",
+                    "value": "${config:omnetppInstallDir}/images"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": "Build All Debug"
+        }
+    ]
+}

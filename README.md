@@ -14,10 +14,10 @@ This is a work in progress and suggestions and additions are welcome!
   - [x] Check out the correct branch 
     - [ ] Add script call argument to choose the branches
 - [x] Create Build tasks for alle models
-  - [ ] add json config for modeks and dependencies
-- [X] Create run tasks for simulations
-  - [X] Create run tasks for the currently open file with qtenv
-  - [ ] Attach debugger -- debug in vscode
+  - [ ] add json config for models and dependencies
+- [X] Create launch configs for simulations
+  - [X] Create run tasks for the currently open file with qtenv (switched to launch configs)
+  - [X] Attach debugger -- debug in vscode
   - [ ] Create run task for parameter studies and batch runs in cmdenv
 
 ## Prerequisites
@@ -38,9 +38,11 @@ This is a work in progress and suggestions and additions are welcome!
 Open this repository in VSCode and install the recommended extensions.
 Inside the `.vscode` folder you will find the `settings.json`, `c_cpp_properties.json` and a default `tasks.json` file.
 
-Adjust the paths in the `settings.json` and `c_cpp_properties.json` to your OMNeT++ installation.
+**Adjust the paths in the `settings.json` and `c_cpp_properties.json` to your OMNeT++ installation.**
 
 The `tasks.json` file contains a default setup for tasks, which should work if you use the `setup_models.sh` script to setup the workspace. If the tasks do not work for you checkout the `create_tasks.py` script, adjust it to your needs, and generate new tasks.
+
+The `launch.json` file contains a default setup for launch configs, which should work if you use the `setup_models.sh` script to setup the workspace. If the launch configs do not work for you checkout the `create_tasks.py` script and look for everything containing "run", adjust it to your needs, and generate new launch configs.
 
 ## Setup models
 In the top level of this repository is a script to clone all models and checkout the correct branches.
@@ -58,7 +60,7 @@ At the top of the script there are some definitions you might want to adjust to 
 Then there are a lot of helper functions to create the tasks.
 At the bottom of the script is the actual execution of the functions to create the tasks, which you can adjust to your needs, e.g., if you do not want exclude specific models.
 
-Run the script using `python create_tasks.py` in the repository root. 
+Run the script using `python3 create_tasks.py` in the repository root. 
 It will create a
 `tasks.json` file in the `.vscode` folder. If there was an old `tasks.json` file it will be moved to `tasks.json.old` with an index if there are multiple so you do not loose a task configuration.
 
@@ -69,13 +71,13 @@ There are two build tasks for each model, one for debug and one for release buil
 You can also clean the build directories with the `clean` task.
 
 ## Create run tasks
-In the `create_tasks.py` script, there are also functions to create run tasks for simulations.
-Currently, there is only a task to run the currently openned file with qtenv.
+In the `create_tasks.py` script, there are also functions to create launch configs for simulations (look for "run" in the names).
+There are four launch configs that all run a simulation for the currently openned file with qtenv: Debug (uses opp_run_dbg) and Release (uses opp_run), each with and without building all models beforehand.
 It should be possible to adjust the script to create more run tasks, e.g., for parameter studies or batch runs in cmdenv.
 This is future work...
 
 ## Run a simulation
-To run a simulation go to the top menu and select `Terminal` -> `Run Task...`.
-Select the `Run current simulation ini file` task for the model you want to run.
-There is also a `Run debug current simulation ini file` to run the dbg library, but the vscode debugger is not yet attached to it.
-This is future work...
+To launch a simulation go to the `run and debug` tab of vscode and select the config you want to run.
+Make sure you have the main simulation ini file (e.g., omnetpp.ini) open in the editor.
+Just click run and the simulation should start.
+The debugger will be attached automatically and you can use breakpoints and step through the code.
