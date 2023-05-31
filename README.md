@@ -54,6 +54,18 @@ Make sure you have access to the repositories and SSH is configured correctly.
 
 For now you have to edit the script to change the branches to checkout or to exclude some of our models from git clone.
 
+## Clone repo into existing OMNeT++ workspace
+If you already have an OMNeT++ workspace and want to add this repository to it, you can do so by cloning this repository into your workspace.
+```bash	
+cd <path to your workspace>
+rm -rf .git
+git init
+git remote add origin git@github.com:CoRE-RG/OMNeT4VSCode.git
+git fetch
+git checkout origin/master -t --mixed
+```
+**Make sure though that all frameworks exist in the correct place to use the scripts, tasks, and lauch configurations in this repository.**
+
 ## Create Build Tasks
 In the top level of this repository is a python script `create_tasks.py` to create build tasks for all models.
 At the top of the script there are some definitions you might want to adjust to your needs, note that they use relative paths depending on the `settings.json`, so they should work out of the box if you use the `setup_models.sh` script.
