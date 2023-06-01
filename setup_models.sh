@@ -49,5 +49,7 @@ git checkout "$CORE_BRANCH"
 echo "Checking out inet $INET_VERSION"
 cd "../inet"
 git -c advice.detachedHead=false checkout "$INET_VERSION"
+echo "Getting inet submodules"
+git submodule update --init --recursive
 
 echo "Done, you should be good to go!"
