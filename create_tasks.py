@@ -25,6 +25,7 @@ fico4omnetRoot = "${workspaceFolder}/FiCo4OMNeT"
 signalsandgatewaysRoot = "${workspaceFolder}/SignalsAndGateways"
 soa4coreRoot = "${workspaceFolder}/SOA4CoRE"
 sdn4coreRoot = "${workspaceFolder}/SDN4CoRE"
+nidsdatasetcreationRoot = "${workspaceFolder}/NIDSDatasetCreation"
 
 # project lib paths
 libDbgExt = "_dbg"
@@ -35,6 +36,7 @@ fico4omnetLib = fico4omnetRoot + os.sep + "src" + os.sep + "FiCo4OMNeT"
 signalsandgatewaysLib = signalsandgatewaysRoot + os.sep + "src" + os.sep + "SignalsAndGateways"
 soa4coreLib = soa4coreRoot + os.sep + "src" + os.sep + "SOA4CoRE"
 sdn4coreLib = sdn4coreRoot + os.sep + "src" + os.sep + "SDN4CoRE"
+nidsdatasetcreationLib = nidsdatasetcreationRoot + os.sep + "src" + os.sep + "NIDSDatasetCreation"
 
 # project ned paths
 inetNedPath = inetRoot + "/src" + sep + inetRoot + "/examples" + sep + inetRoot + "/tutorials" + sep + inetRoot + "/showcases"
@@ -44,14 +46,26 @@ fico4omnetNedPath = fico4omnetRoot + "/src" + sep + fico4omnetRoot + "/examples"
 signalsandgatewaysNedPath = signalsandgatewaysRoot + "/src" + sep + signalsandgatewaysRoot + "/examples"
 soa4coreNedPath = soa4coreRoot + "/src" + sep + soa4coreRoot + "/examples"
 sdn4coreNedPath = sdn4coreRoot + "/src" + sep + sdn4coreRoot + "/examples"
+nidsdatasetcreationNedPath = nidsdatasetcreationRoot + "/src" + sep + nidsdatasetcreationRoot + "/simulations"
 # combined ned path
-nedPath = inetNedPath + sep + core4inetNedPath + sep + openflowNedPath + sep + fico4omnetNedPath + sep + signalsandgatewaysNedPath + sep + soa4coreNedPath + sep + sdn4coreNedPath
+nedPath = str(inetNedPath
+        #    + sep + core4inetNedPath
+        #    + sep + openflowNedPath
+        #    + sep + fico4omnetNedPath
+        #    + sep + signalsandgatewaysNedPath
+        #    + sep + soa4coreNedPath
+        #    + sep + sdn4coreNedPath
+           + sep + nidsdatasetcreationNedPath)
 
 # project images paths
 inetImagesPath = inetRoot + "/images"
 core4inetImagesPath = core4inetRoot + "/images"
 openflowImagesPath = openflowRoot + "/images"
-imagesPath = inetImagesPath + sep + core4inetImagesPath + sep + openflowImagesPath
+nidsdatasetcreationImagesPath = nidsdatasetcreationRoot + "/images"
+imagesPath = str(inetImagesPath
+            #   + sep + core4inetImagesPath
+            #   + sep + openflowImagesPath
+              + sep + nidsdatasetcreationImagesPath)
 
 run_command = "${config:omnetppInstallDir}/bin/opp_run"
 run_command_dbg = "${config:omnetppInstallDir}/bin/opp_run_dbg"
@@ -66,41 +80,66 @@ run_args_default = [
     "--debug-on-errors=true",
     "-l",
     inetLib,
+    # "-l",
+    # core4inetLib,
+    # "-l",
+    # openflowLib,
+    # "-l",
+    # fico4omnetLib,
+    # "-l",
+    # signalsandgatewaysLib,
+    # "-l",
+    # soa4coreLib,
+    # "-l",
+    # sdn4coreLib,
     "-l",
-    core4inetLib,
-    "-l",
-    openflowLib,
-    "-l",
-    fico4omnetLib,
-    "-l",
-    signalsandgatewaysLib,
-    "-l",
-    soa4coreLib,
-    "-l",
-    sdn4coreLib,
+    nidsdatasetcreationLib,
     "${file}"
 ]
 run_environment = [
     {"name": "OMNETPP_ROOT", "value": "${config:omnetppInstallDir}"},
-    {"name": "PATH", "value": "${config:omnetppInstallDir}/bin/:${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet:${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet:${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet:${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow:${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways:${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core:${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core:${env:PATH}"},
+    {"name": "PATH", "value": "${config:omnetppInstallDir}/bin/"
+	 + ":${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet"
+     + ":${workspaceFolder}/inet/bin"
+	#  + ":${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet"
+	#  + ":${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet"
+	#  + ":${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow"
+	#  + ":${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways"
+	#  + ":${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core"
+	#  + ":${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core"
+	 + ":${workspaceFolder}/NIDSDatasetCreation/src:${workspaceFolder}/NIDSDatasetCreation/src/nidsdatasetcreation"
+	 + ":${env:PATH}"
+    },
+    {"name": "PYTHONPATH", "value": "${workspaceFolder}/inet/python"},
     {"name": "OMNETPP_CONFIGFILE", "value": "${config:omnetppInstallDir}/Makefile.inc"},
-    {"name": "OMNETPP_IMAGE_PATH", "value": "${config:omnetppInstallDir}/images"}
+    {"name": "OMNETPP_IMAGE_PATH", "value": "${config:omnetppInstallDir}/images"},
+    {"name": "INET_ROOT", "value": inetRoot},
+    {"name": "INET_OMNETPP_OPTIONS", "value": "--image-path=${workspaceFolder}/inet/images"},
+    {"name": "INET_GDB_OPTIONS", "value": "-quiet -ex run --args"},
+    {"name": "INET_VALGRIND_OPTIONS", "value": "-v --tool=memcheck --leak-check=yes --show-reachable=no --leak-resolution=high --num-callers=40 --freelist-vol=4000000"},
 ]
 
 ## Adjust the path to your OMNeT++ installation and workspace
 omnetpp_task_env = {
     "PATH": "${config:omnetppInstallDir}/bin/"
             + ":${workspaceFolder}/inet/src:${workspaceFolder}/inet/src/inet"
-            + ":${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet"
-            + ":${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet"
-            + ":${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow"
-            + ":${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways"
-            + ":${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core"
-            + ":${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core"
+            + ":${workspaceFolder}/inet/bin"
+            # + ":${workspaceFolder}/CoRE4INET/src:${workspaceFolder}/CoRE4INET/src/core4inet"
+            # + ":${workspaceFolder}/FiCo4OMNeT/src:${workspaceFolder}/FiCo4OMNeT/src/fico4omnet"
+            # + ":${workspaceFolder}/OpenFlow/src:${workspaceFolder}/OpenFlow/src/openflow"
+            # + ":${workspaceFolder}/SignalsAndGateways/src:${workspaceFolder}/SignalsAndGateways/src/signalsandgateways"
+            # + ":${workspaceFolder}/SOA4CoRE/src:${workspaceFolder}/SOA4CoRE/src/soa4core"
+            # + ":${workspaceFolder}/SDN4CoRE/src:${workspaceFolder}/SDN4CoRE/src/sdn4core"
+            + ":${workspaceFolder}/NIDSDatasetCreation/src:${workspaceFolder}/NIDSDatasetCreation/src/nidsdatasetcreation"
             + ":${env:PATH}",
+    "PYTHONPATH": "${workspaceFolder}/inet/python",
     "OMNETPP_ROOT": "${config:omnetppInstallDir}",
     "OMNETPP_IMAGE_PATH": "${config:omnetppInstallDir}/images",
-    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc"
+    "OMNETPP_CONFIGFILE": "${config:omnetppInstallDir}/Makefile.inc",
+    "INET_ROOT": inetRoot,
+    "INET_OMNETPP_OPTIONS": "--image-path=${workspaceFolder}/inet/images",
+    "INET_GDB_OPTIONS": "-quiet -ex run --args",
+    "INET_VALGRIND_OPTIONS": "-v --tool=memcheck --leak-check=yes --show-reachable=no --leak-resolution=high --num-callers=40 --freelist-vol=4000000",
 }
 
 make_module = "/usr/bin/make"
@@ -304,21 +343,62 @@ if os.path.exists(os.path.join(vscode_folder, tasks_file)):
 with open(os.path.join(vscode_folder, tasks_file), "w") as f:
     print ("Create new tasks.json file")
     inet = create_all_model_tasks("inet", [])
-    core4inet = create_all_model_tasks("CoRE4INET", ["inet"])
-    fico4omnet = create_all_model_tasks("FiCo4OMNeT", [])
-    openflow = create_all_model_tasks("OpenFlow", ["inet"])
-    signalsandgateways = create_all_model_tasks("SignalsAndGateways", ["CoRE4INET","FiCo4OMNeT"])
-    soa4core = create_all_model_tasks("SOA4CoRE", ["SignalsAndGateways"])
-    sdn4core = create_all_model_tasks("SDN4CoRE", ["OpenFlow","SOA4CoRE"])
-    cleanall = create_task_clean_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"])
-    buildallrelease = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "release")
-    buildalldebug = create_task_build_all(["inet", "CoRE4INET","FiCo4OMNeT", "OpenFlow", "SignalsAndGateways", "SOA4CoRE", "SDN4CoRE"], "debug")
+    # core4inet = create_all_model_tasks("CoRE4INET", ["inet"])
+    # fico4omnet = create_all_model_tasks("FiCo4OMNeT", [])
+    # openflow = create_all_model_tasks("OpenFlow", ["inet"])
+    # signalsandgateways = create_all_model_tasks("SignalsAndGateways", ["CoRE4INET","FiCo4OMNeT"])
+    # soa4core = create_all_model_tasks("SOA4CoRE", ["SignalsAndGateways"])
+    # sdn4core = create_all_model_tasks("SDN4CoRE", ["OpenFlow","SOA4CoRE"])
+    nidsdatasetcreation = create_all_model_tasks("NIDSDatasetCreation", ["inet"])
+    cleanall = create_task_clean_all(["inet",
+                                    #   "CoRE4INET",
+                                    #   "FiCo4OMNeT",
+                                    #   "OpenFlow",
+                                    #   "SignalsAndGateways",
+                                    #   "SOA4CoRE",
+                                    #   "SDN4CoRE",
+                                      "NIDSDatasetCreation"
+                                      ])
+    buildallrelease = create_task_build_all(["inet",
+                                            #  "CoRE4INET",
+                                            #  "FiCo4OMNeT",
+                                            #  "OpenFlow",
+                                            #  "SignalsAndGateways",
+                                            #  "SOA4CoRE",
+                                            #  "SDN4CoRE",
+                                             "NIDSDatasetCreation"
+                                             ], "release")
+    buildalldebug = create_task_build_all(["inet",
+                                        #    "CoRE4INET",
+                                        #    "FiCo4OMNeT",
+                                        #    "OpenFlow",
+                                        #    "SignalsAndGateways",
+                                        #    "SOA4CoRE",
+                                        #    "SDN4CoRE",
+                                           "NIDSDatasetCreation"
+                                           ], "debug")
 
     output = OrderedDict([
         ("version", "2.0.0"),
-        ("tasks", inet + core4inet + fico4omnet + openflow + signalsandgateways + soa4core + sdn4core + cleanall + buildallrelease + buildalldebug)
+        ("tasks", inet 
+        #  + core4inet
+        #  + fico4omnet
+        #  + openflow
+        #  + signalsandgateways
+        #  + soa4core
+        #  + sdn4core
+         + nidsdatasetcreation
+         + cleanall + buildallrelease + buildalldebug)
     ])
-    print ("Added tasks for: inet, CoRE4INET, FiCo4OMNeT, OpenFlow, SignalsAndGateways, SOA4CoRE, SDN4CoRE, and clean all and build all tasks for release and debug")
+    print ("Added tasks for: inet, "
+        #    + "CoRE4INET, "
+        #    + "FiCo4OMNeT, "
+        #    + "OpenFlow, "
+        #    + "SignalsAndGateways, "
+        #    + "SOA4CoRE, "
+        #    + "SDN4CoRE, "
+           + "NIDSDatasetCreation, "
+           + "and clean all and build all tasks for release and debug")
     #write to file
     f.write(json.dumps(output, indent=4, separators=(',', ': ')))
     print ("Wrote tasks.json file")
